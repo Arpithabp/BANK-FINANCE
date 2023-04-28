@@ -9,7 +9,7 @@ pipeline {
         stage('Git checkout') {
             steps {
               
-                   git 'https://github.com/SaiRevanth-J/project-02-bank-finacial.git'
+                   git 'https://github.com/Arpithabp/BANK-FINANCE.git'
             
                 }
             }
@@ -30,7 +30,7 @@ pipeline {
               steps {
                   
                   sh'sudo docker system prune -af '
-                  sh 'sudo docker build -t revanthkumar9/bank-finance:${BUILD_NUMBER}.0 .'
+                  sh 'sudo docker build -t arpithabp/banking-finance:${BUILD_NUMBER}.0 .'
               
                 }
             }
