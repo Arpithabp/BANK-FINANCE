@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     tools {
-        maven "maven"
+         maven 'M2_HOME'
     }
 
     stages {
         stage('Git checkout') {
             steps {
               
-                   git 'https://github.com/SaiRevanth-J/project-02-bank-finacial.git'
+                   git 'https://github.com/Arpithabp/BANK-FINANCE.git'
             
                 }
             }
@@ -30,62 +30,19 @@ pipeline {
               steps {
                   
                   sh'sudo docker system prune -af '
-                  sh 'sudo docker build -t revanthkumar9/bank-finance:${BUILD_NUMBER}.0 .'
+                  sh 'sudo docker build -t arpithabp/banking-finance:${BUILD_NUMBER}.0 .'
               
                 }
             }
                 
         stage('Docker login and push') {
               steps {
-                   withCredentials([string(credentialsId: 'docpass', variable: 'docpasswd')]) {
-                  sh 'sudo docker login -u revanthkumar9 -p ${docpasswd} '
-                  sh 'sudo docker push revanthkumar9/bank-finance:${BUILD_NUMBER}.0 '
+                   withCredentials([string(credentialsId: 'Docker-Hub', variable: 'dockerHubPassword')]) {
+                  sh 'sudo docker login -u arpithabp -p ${docpasswd} '
+                  sh 'sudo docker push arpithabp/banking-finance:${BUILD_NUMBER}.0 '
                   }
                 }
         }    
-                
-        stage (' configuring Test-server with terraform & ansible and deploying'){
-            steps{
-
-                dir('test-server'){
-                sh 'sudo chmod 600 DEMOKEY.pem'
-                sh 'terraform init'
-                sh 'terraform validate'
-                sh 'terraform apply --auto-approve'
-                }
-               
-            }
-        }
-
-        stage('waitng to start the app') {
-              steps {
-                  
-                  sh ' sleep 40'
-                           
-                }
-            }
-       
-        stage('Selenium test') {
-              steps {
-                  
-                  sh 'sudo java -jar seleniumbank.jar'
-                  sh"echo 'application is logged in succussfully done' "
-                           
-                }
-            }
-          
-         stage ('setting Prod-Server with terraform and ansible'){
-            steps{
-                
-                dir('prod-server'){
-                sh 'chmod 600 DEMOKEY.pem'
-                sh'terraform init'
-                sh'terraform validate'
-                sh'terraform apply --auto-approve'
-            }
-        }
-         }
-
-        
+             
     }
 }
