@@ -26,7 +26,7 @@ pipeline {
             }
     }
     
-     stage('Docker Image Creation') {
+    stage('Docker Image Creation') {
       steps {
         sh 'docker build -t arpithabp/banking-finance:latest . '
             }
@@ -41,31 +41,6 @@ pipeline {
 
     stage('Push Image to DockerHub') {
       steps {
-        sh 'docker push arpithabp/banking-finance:latest'
+        sh 'docker push arpithabp/banking-finance:latest . '
             }
     }
-	
-    stage('check infra validation'){
-		   steps{
-				sh 'chmod 600 insure.pem'
-				sh 'terraform init'
-				sh 'terraform validate'
-				echo "-------------------------------------------------------------------------------Validation Successful-------------------------------------------------------------------------------------------------"
-			}
-		}
-		stage('infra plan'){
-		   steps{
-				sh 'terraform plan'
-				echo "-------------------------------------------------------------------------------Plan Successful-------------------------------------------------------------------------------------------------"
-			}
-		}
-		stage('create infra'){
-		   steps{
-		   		echo "-------------------------------------------------------------------------------Applying start-------------------------------------------------------------------------------------------------"
-				sh 'terraform apply -auto-approve'
-				echo "-------------------------------------------------------------------------------apply end-------------------------------------------------------------------------------------------------"
-			}
-		}
-	}
-}
-}
