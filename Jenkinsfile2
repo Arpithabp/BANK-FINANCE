@@ -46,7 +46,7 @@ pipeline {
 }
     stage('check infra validation'){
 		   steps{
-				sh 'chmod 600 insure.pem'
+				sh 'chmod 600 bank.pem'
 				sh 'terraform init'
 				sh 'terraform validate'
 				echo "-------------------------------------------------------------------------------Validation Successful-------------------------------------------------------------------------------------------------"
