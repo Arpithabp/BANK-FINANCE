@@ -43,4 +43,6 @@ pipeline {
       steps {
         sh 'docker push arpithabp/banking-finance:latest . '
             }
-    }
+}
+}    
+}
