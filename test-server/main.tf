@@ -1,36 +1,19 @@
-resource "aws_eip_association" "eip_assoc" {
-  instance_id   = aws_instance.test-server.id
-  allocation_id = "eipalloc-083aadbe2bb30d7b5"
-}
-resource "aws_instance" "test-server" {
-  ami           = "ami-00c39f71452c08778" 
-  instance_type = "t2.micro" 
-  key_name = "DEMOKEY"
-  vpc_security_group_ids= ["sg-0c7aae9017fc5106b"]
+resource "aws_instance" "example" {
+  ami           = "ami-02eb7a4783e7e9317" // set the AMI ID of the image you want to use
+  instance_type = "t2.micro" // set the instance type you want to use
+  key_name      = "bank.pem" // set the name of the key pair you want to use to SSH into the instance
+  vpc_security_group_ids= ["sg-04fba683f37ca92fd"]
   connection {
     type     = "ssh"
-    user     = "ec2-user"
-    private_key = file("./DEMOKEY.pem")
+    user     = "ubuntu"
+    private_key = file("bank.pem")
     host     = self.public_ip
   }
-  provisioner "remote-exec" {
-    inline = [ "echo 'wait to start instance' "]
-  }
   tags = {
-    Name = "test-server"
+    Name = "deploy-server" // set a name for the instance
   }
- provisioner "local-exec" {
-
-        command = " echo ${aws_instance.test-server.public_ip} > inventory "
- }
- 
- provisioner "local-exec" {
- command = "ansible-playbook /var/lib/jenkins/workspace/project-02-banking/test-server/test-bank-playbook.yml "
-  } 
-}
-
-output "test-server_public_ip" {
-
-  value = aws_eip_association.eip_assoc.public_ip
-  
+    provisioner "local-exec" {
+         command = "echo ${aws_instance.example.public_ip} > inventory"
+        
+  }
 }
