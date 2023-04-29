@@ -41,13 +41,9 @@ pipeline {
 
     stage('Push Image to DockerHub') {
       steps {
-<<<<<<< HEAD
         sh 'docker push arpithabp/banking-finance:latest '
-=======
-        sh 'docker push arpithabp/banking-finance:latest'
->>>>>>> d8e7345 (added terraform stage)
-            }
-
+}
+}
     stage('check infra validation'){
 		   steps{
 				sh 'chmod 600 insure.pem'
