@@ -9,7 +9,7 @@ pipeline {
     stage('CheckOut') {
       steps {
         echo 'Checkout the source code from GitHub'
-        git branch: 'main', url: 'https://github.com/Arpithabp/BANK-FINANCE.git'
+        git branch: 'master', url: 'https://github.com/Arpithabp/BANK-FINANCE.git'
             }
     }
     
