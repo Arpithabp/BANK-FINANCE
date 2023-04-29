@@ -41,7 +41,7 @@ pipeline {
 
     stage('Push Image to DockerHub') {
       steps {
-        sh 'docker push arpithabp/banking-finance:latest . '
+        sh 'docker push arpithabp/banking-finance:latest '
             }
 }
 }    
