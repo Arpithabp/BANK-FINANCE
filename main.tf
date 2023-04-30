@@ -11,9 +11,5 @@ resource "aws_instance" "example" {
   }
   tags = {
     Name = "deploy-server" // set a name for the instance
-  }
-    provisioner "local-exec" {
-         command = "echo ${aws_instance.example.public_ip} > inventory"
-        
-  }
+      }
 }
